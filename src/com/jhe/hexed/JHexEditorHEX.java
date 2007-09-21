@@ -35,7 +35,7 @@ public class JHexEditorHEX extends JComponent implements MouseListener,KeyListen
         Dimension d=new Dimension();
         FontMetrics fn=getFontMetrics(he.font);
         int h=fn.getHeight();
-        int nl=1;
+        int nl=he.getLineas();
         d.setSize(((fn.stringWidth(" ")+1)*+((16*3)-1))+(he.border*2)+1,h*nl+(he.border*2)+1);
         return d;
     }
@@ -47,7 +47,7 @@ public class JHexEditorHEX extends JComponent implements MouseListener,KeyListen
         Dimension d=new Dimension();
         FontMetrics fn=getFontMetrics(he.font);
         int h=fn.getHeight();
-        int nl=he.getLineas();
+        int nl=1;
         d.setSize(((fn.stringWidth(" ")+1)*+((16*3)-1))+(he.border*2)+1,h*nl+(he.border*2)+1);
         return d;
     }
