@@ -1,0 +1,269 @@
+<?xml version="1.0"?>
+<project name="nettest" default="jar" basedir=".">
+<description>
+	net test
+</description>
+	<!-- set global properties for this build -->
+	<property name="company.name" value="zzcq"></property>	
+	<property name="src.dir" value="src"/>
+	<property name="test.dir" value="test"/>
+	<property name="build.dir" value="build"/>
+
+	<path id="build.classpath">
+		<fileset dir="lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="init">
+		<tstamp/>
+	</target>
+
+	<target name="back" depends="init" description="back src file and build.xml">
+		<jar jarfile="${back.dir}/stationMonitor_${DSTAMP}_back.jar">
+			<fileset dir="${src.dir}"/>
+        	<fileset dir="./">
+        		<include name="build.xml" />
+        	</fileset>
+		</jar>
+	</target>
+
+	<target name="compile" >
+		<mkdir dir="${build.dir}/classes"/>
+		<javac srcdir="${src.dir}" destdir="${build.dir}/classes" classpathref="build.classpath" source="1.5" target="1.5">
+			<include name="**/*.java"/>
+		</javac>
+	</target>
+	
+	<target name="compile-g">
+			<mkdir dir="${build.dir}/classes-debug"/>
+			<javac srcdir="${src.dir}" destdir="${build.dir}/classes-debug" source="1.5" target="1.5" classpathref="build.classpath" debug="yes">
+				<include name="**/*.java"/>
+			</javac>
+		<copy todir="${build.dir}/classes-debug">
+			<fileset dir="${src.dir}">
+							<include name="**/*.gif" />
+							<include name="**/*.jpg" />
+							<!--
+							<include name="**/*.xml" />				
+							<exclude name="**/hibernate.cfg.xml" />
+							-->
+						</fileset>
+				</copy> 
+	</target>
+
+	<target name="jar" depends = "compile">		
+		<jar jarfile="${build.dir}/nettest.jar">
+			<manifest>
+						<attribute name="Built-By" value="${company.name}"/>
+						<attribute name="Main-class" value="com.zzcq.net.NetTestFrame"/>
+					</manifest>
+			
+			<fileset dir="${build.dir}/classes">			
+			</fileset>
+
+			<fileset dir="${src.dir}">
+				<include name="**/*.gif" />
+				<include name="**/*.jpg" />
+				<!--
+				<include name="**/*.xml" />				
+				<exclude name="**/hibernate.cfg.xml" />
+				-->
+			</fileset>
+		</jar>
+		
+	</target>
+	
+	
+	<target name="libssignal">
+		<signjar alias="daokou" storepass="123456" keystore="daokou.key">
+			<fileset dir="${build.dir}/temp"/>
+		</signjar>
+		
+	</target>
+	
+
+	
+	
+	<target name="webdeploy" depends="jar">
+		<copy todir="c:\\tomcat\workapp\">
+		</copy>
+	</target>
+	
+	<target name="resource" >
+		<copy file="hibernate.cfg.xml" tofile="resource/hibernate.cfg.xml"/>
+		<copy file="DaokouElements.hbm.xml" tofile="resource/DaokouElements.hbm.xml"/>		
+		<!--
+		<copy todir="resource/com/zzcq/util">
+			<fileset dir="z:/">
+				<include name="**/*.xml" />
+				<include name="**/*.jpg" />				
+				<exclude name="**/test/**" />
+				<exclude name="**/back/**" />
+			</fileset>
+		</copy> 
+		-->
+		<copy todir="resource">
+					<fileset dir="${src.dir}">
+						<include name="**/*.config" />	
+						<include name="**/*.properties" />
+					</fileset>
+				<fileset dir="./">
+						<include name="*.hbm.xml" />	
+						<include name="*.cfg.xml" />
+				</fileset>
+				</copy> 		
+		<jar jarfile="${build.dir}/resource.jar">					
+					<fileset dir="resource" />	
+		</jar>
+		<signjar jar="resource.jar" signedjar ="${build.dir}/libs-signal/resource.jar" alias="daokou" storepass="123456" keystore="daokou.key"/>		
+	</target>
+	
+	<target name="dllResource">
+		<jar jarfile="video-zzcq.jar">					
+					<fileset dir="${basedir}" >	
+						<include name="*.dll"/>
+					</fileset>
+		</jar>
+		<signjar jar="video-zzcq.jar" signedjar ="${build.dir}/libs-signal/video-zzcq.jar" alias="daokou" storepass="123456" keystore="daokou.key"/>		
+	</target>
+	
+	<target name="zzcqStationMonitor" depends="compile" description="application">
+		<jar jarfile="${jar.dir}/zzcqStationMonitor.jar" >
+		<manifest>
+			<attribute name="Built-By" value="${company.name}"/>
+			<attribute name="Main-class" value="com.zzcq.stationMonitor.HistoryMonitor"/>
+		</manifest>
+			<fileset dir="${build.dir}/classes">
+				<exclude name="**/web/"/>
+			</fileset>
+			<fileset dir="libContain" />
+		</jar>
+
+		<copy file="${jar.dir}/zzcqStationMonitor.jar" tofile="run/zzcqStationMonitor.jar"/>
+		<copy file="monitor.conf" tofile="run/monitor.conf"/>
+		<copy file="server.conf" tofile="run/server.conf"/>
+	</target>
+
+	<!--
+	<target name="gps" depends="compile" description="station gps collect">
+		<jar jarfile="${jar.dir}/gps.jar" >
+        <manifest>
+			<attribute name="Main-class" value="com.zzcq.stationMonitor.SerialExample"/>
+		</manifest>
+		<fileset dir="${build.dir}/classes">
+				<exclude name="**/server/"/>
+				<exclude name="**/web/"/>
+			</fileset>
+			<fileset dir="lib">
+				<include name="org/**"/>
+				<include name="com/**"/>
+				<include name="javax/**"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="monitor" depends="compile" description="realtime monitor">
+		<jar jarfile="${jar.dir}/monitor.jar">
+		<manifest>
+			<attribute name="Main-class" value="com.zzcq.monitor.Monitor"/>
+		</manifest>
+			<fileset dir="${build.dir}/classes">
+				<exclude name="**/server/"/>
+				<exclude name="**/web/"/>
+			</fileset>
+			<fileset dir="lib">
+				<include name="org/**"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="historyMonitor" depends="compile" description="history monitor">
+		<jar jarfile="${jar.dir}/historyMonitor.jar" >
+		<manifest>
+			<attribute name="Built-By" value="${company.name}"/>
+			<attribute name="Main-class" value="com.zzcq.stationMonitor.HistoryMonitor"/>
+		</manifest>
+			<fileset dir="${build.dir}/classes">
+				<exclude name="**/server/"/>
+				<exclude name="**/web/"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="server" depends="compile" description="one solution for realtime monitor,other way is by web">
+		<jar jarfile="${jar.dir}/server.jar">
+		<manifest>
+			<attribute name="Built-By" value="${company.name}"/>
+			<attribute name="Main-class" value="com.zzcq.stationMonitor.server.Server"/>
+		</manifest>
+			<fileset dir="${build.dir}/classes">
+				<exclude name="**/web/"/>
+			</fileset>
+			<fileset dir="lib" excludes="**/*.jar"/>
+		</jar>
+		<copy file="server.conf" tofile="${jar.dir}/server.conf"/>
+	</target>
+
+	<target name="mapFileToDb" depends="compile" description="litter tool for import staion map to db">
+		<jar jarfile="${jar.dir}/mapFileToDb.jar">
+		<manifest>
+			<attribute name="Built-By" value="${company.name}"/>
+			<attribute name="Main-class" value="com.zzcq.stationMonitor.XmlToDBImportTool"/>
+		</manifest>
+			<fileset dir="${build.dir}/classes">
+				<exclude name="**/web/"/>
+			</fileset>
+			<fileset dir="lib" excludes="**/*.jar"/>
+		</jar>
+		<copy file="server.conf" tofile="${jar.dir}/server.conf"/>
+	</target>
+
+	<target name="editMap" depends="compile" description="edit for station map">
+		<jar jarfile="${jar.dir}/editStationMap.jar">
+			<manifest>
+				<attribute name="Built-By" value="${company.name}"/>
+				<attribute name="Main-class" value="com.zzcq.stationMonitor.DemoFrame"/>
+			</manifest>
+			<fileset dir="${build.dir}/classes">
+				<exclude name="**/server/"/>
+				<exclude name="**/web/"/>
+			</fileset>
+		</jar>
+	</target>
+	-->
+	<!--
+	<target name="deploy" depends="signal" description="deploy this for tomcat">
+		<copy todir="${web.dir}">
+			<fileset dir="${web.src.dir}"/>
+		</copy>
+		<copy todir="${web.dir}/WEB-INF/classes">
+			<fileset dir="${build.dir}/classes"/>
+		</copy>
+		<copy file="${src.dir}/com/zzcqp/util/database/db.properties" tofile="${web.dir}/WEB-INF/classes/com/zzcqp/util/database/db.properties"/>
+		<copy file="${jar.dir}/stationMonitor.jar" tofile="${web.dir}/stationMonitor.jar"/>
+		<jar jarfile="${disk.dir}/station.war">
+			<fileset dir="${web.dir}"/>
+		</jar>
+		<copy file="${disk.dir}/station.war" tofile="${deploy.dir}/station.war"/>
+	</target>
+	-->
+
+	<!--
+  <taskdef resource="checkstyletask.properties"  classpath="checkstyle-all-3.1.jar"/>
+  <target name="checkstyle" >
+	  <checkstyle config="checkstyle_zzcq.xml">
+	    <fileset dir="${src.dir}" includes="**/*.java"/>
+    	<formatter type="xml" toFile="${build.dir}/checkstyle_errors.xml"/>
+	  </checkstyle>
+  </target>
+-->
+	
+	<!-- -->
+	<!-- Cleanup targets -->
+	<!-- -->
+	<target name="clean" description="Cleans any directories and generated files">
+		<delete dir="${build.dir}"/>
+		<delete dir="${disk.dir}"/>
+	</target>
+</project>
