@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/mina-core-1.1.0.jar" sourcepath="E:/opensource/mina-1.1.0/core/src/main/java"/>
+	<classpathentry kind="lib" path="lib/nlog4j-1.2.25.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
