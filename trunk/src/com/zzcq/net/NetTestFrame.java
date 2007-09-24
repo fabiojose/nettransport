@@ -28,7 +28,7 @@ public class NetTestFrame extends JFrame{
 	 */
 	private void initialize() {
         this.setSize(new java.awt.Dimension(600,480));
-        this.setTitle("ÍøÂç²âÊÔ--0.2.1	20070919");
+        this.setTitle("ÍøÂç²âÊÔ--0.2.2	20070919");
         this.setContentPane(getJTabbedPane());
         serverPanel = new NetServerTestPanel();
         serverPanel.setSize(new java.awt.Dimension(465,437));

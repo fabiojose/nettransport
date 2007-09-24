@@ -136,13 +136,28 @@ public class JHexEditor extends JPanel implements FocusListener,AdjustmentListen
     		actualizaCursor();
     		buffer=textArea.getText().getBytes();
     		cardLayout.show(root, "H");
+    		if (cursor >= buffer.length)
+    			cursor = buffer.length-1;
     	}
     	else
     	{
-    		textArea.setText(new String(buffer));
+    		String ret=new String(buffer);
+    		textArea.setText(ret);
     		
-    		
-    		cardLayout.show(root, "S");    		
+    		int pos=0;
+    		for (int i=0;i<ret.length();i++)
+    		{
+    			if (pos>=cursor)
+    				break;
+    			char c = ret.charAt(i);
+    			if (c<128)
+    				pos=pos+1;
+    			else
+    				pos=pos+2;
+    		}
+    		textArea.setCaretPosition(pos);
+    		cardLayout.show(root, "S"); 
+    		textArea.requestFocus();
     	}
     	this.repaint();
     }

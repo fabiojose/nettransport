@@ -28,6 +28,7 @@ import org.apache.mina.transport.socket.nio.SocketAcceptorConfig;
 
 
 public class NetServerTestPanel extends JPanel implements IoHandler {
+	
 	private final String NEW_LINE = "\r\n";
 
 	private JLabel jLabel = null;
