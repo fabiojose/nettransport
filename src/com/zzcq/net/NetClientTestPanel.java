@@ -217,8 +217,8 @@ public class NetClientTestPanel extends JPanel implements IoHandler {
 				FileInputStream in = new FileInputStream(f);
 				in.read(data);
 				in.close();
-
-				send(data);
+				jTextFieldSend.setBuffer(data);
+				jTextFieldSend.repaint();
 			} catch (Exception e) {
 
 			}
@@ -274,6 +274,7 @@ public class NetClientTestPanel extends JPanel implements IoHandler {
 		// bottomPanel.add(jLabel1);
 		bottomPanel.add(getJTextFieldSend());
 		bottomPanel.add(getJButtonSend());
+		bottomPanel.add(getJButtonSendFile());
 		// bottomPanel.add(getJTextFieldFileSave());
 		bottomPanel.setBorder(new javax.swing.border.TitledBorder("准备发送内容："));
 
@@ -368,7 +369,7 @@ public class NetClientTestPanel extends JPanel implements IoHandler {
 		if (jButtonSendFile == null) {
 			jButtonSendFile = new JButton();
 			jButtonSendFile.setBounds(new java.awt.Rectangle(398, 349, 94, 28));
-			jButtonSendFile.setText("发送文件");
+			jButtonSendFile.setText("打开文件");
 			jButtonSendFile
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
