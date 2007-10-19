@@ -12,7 +12,7 @@ public class NetTestFrame extends JFrame{
 	private JTabbedPane jTabbedPane = null;
 	private NetServerTestPanel serverPanel ;  //  @jve:decl-index=0:visual-constraint="10,472"
 	private NetClientTestPanel clientPanel ;  //  @jve:decl-index=0:visual-constraint="10,472"
-
+	
 	/**
 	 * This method initializes 
 	 * 
