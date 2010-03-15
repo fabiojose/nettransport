@@ -45,7 +45,7 @@ public class JHexEditor extends JPanel implements FocusListener,AdjustmentListen
     private int inicio=0;// start line number
     private int lineas=1;//show line count
     
-    boolean bMacHex=true;//±ê¿ÌÏÔÊ¾
+    boolean bMacHex=true;//æ ‡åˆ»æ˜¾ç¤º
     boolean bHex = false;//
     boolean editable = false;
 
@@ -63,7 +63,9 @@ public class JHexEditor extends JPanel implements FocusListener,AdjustmentListen
         sb=new JScrollBar(JScrollBar.VERTICAL);
         sb.addAdjustmentListener(this);
         sb.setMinimum(0);
-        sb.setMaximum(buff.length/getLineas());
+        //sb.setMaximum(buff.length/getLineas());
+        sb.setMaximum((buffer.length+15)/16);
+
 
         JPanel p1,p2,p3;
         //centro
@@ -101,7 +103,7 @@ public class JHexEditor extends JPanel implements FocusListener,AdjustmentListen
         
         
         this.add(root,BorderLayout.CENTER);     
-        JButton b = new JButton("×Ö·û´®/¶þ½øÖÆ");
+        JButton b = new JButton("å­—ç¬¦ä¸²/äºŒè¿›åˆ¶");
         b.addActionListener(new ActionListener()
         {
 
@@ -110,10 +112,12 @@ public class JHexEditor extends JPanel implements FocusListener,AdjustmentListen
 			}        	
         }
         );
+       
         this.add(b,BorderLayout.NORTH);
         textArea.setEditable(false);
         cardLayout.show(root, "S"); 
     }
+  
     
     private void changeHex()
     {
@@ -134,7 +138,8 @@ public class JHexEditor extends JPanel implements FocusListener,AdjustmentListen
     		}
     		cursor=hpos;
     		actualizaCursor();
-    		buffer=textArea.getText().getBytes();
+    		//buffer=textArea.getText().getBytes();
+                
     		cardLayout.show(root, "H");
     		if (cursor >= buffer.length)
     			cursor = buffer.length-1;
@@ -159,19 +164,12 @@ public class JHexEditor extends JPanel implements FocusListener,AdjustmentListen
     		cardLayout.show(root, "S"); 
     		textArea.requestFocus();
     	}
-    	this.repaint();
+    	//this.repaint();
     }
 
     public void paint(Graphics g)
     {
-        FontMetrics fn=getFontMetrics(font);
-        Rectangle rec=this.getBounds();
-        lineas=(rec.height/fn.getHeight());
-        int n=(buffer.length+15)/16;
-        if(lineas>n) { lineas=n; inicio=0; }
-
-        sb.setValues(getInicio(),getLineas(),0,(buffer.length+15)/16);
-        sb.setValueIsAdjusting(true);
+        
         super.paint(g);
     }
 
@@ -231,6 +229,15 @@ public class JHexEditor extends JPanel implements FocusListener,AdjustmentListen
     {
         inicio=e.getValue();
         if(inicio<0) inicio=0;
+        FontMetrics fn=getFontMetrics(font);
+        Rectangle rec=this.getBounds();
+        lineas=(rec.height/fn.getHeight());
+        int n=(buffer.length+15)/16;
+        if(lineas>n) { lineas=n; inicio=0; }
+
+        //sb.setValues(getInicio(),getLineas(),0,(buffer.length+15)/16);
+        //sb.setValueIsAdjusting(true);
+        sb.setValue(getInicio());
         repaint();
     }
 
@@ -438,8 +445,9 @@ public class JHexEditor extends JPanel implements FocusListener,AdjustmentListen
 
 	public void setBuffer(byte[] buffer) {
 		this.buffer = buffer;
-		if (!bHex)
-			textArea.setText(new String(buffer));
+		//if (bHex)
+                    sb.setMaximum((buffer.length+15)/16);               
+                    textArea.setText(new String(buffer));
 	}
 
 	public boolean isEditable() {

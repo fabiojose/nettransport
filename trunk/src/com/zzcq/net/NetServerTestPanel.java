@@ -28,7 +28,7 @@ import org.apache.mina.transport.socket.nio.SocketAcceptorConfig;
 
 
 public class NetServerTestPanel extends JPanel implements IoHandler {
-	
+
 	private final String NEW_LINE = "\r\n";
 
 	private JLabel jLabel = null;
@@ -55,7 +55,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	private JScrollPane jScrollPane = null;
 	IoAcceptor acceptor = new SocketAcceptor();
-	
+
 
 	private HashSet<IoSession> sessions = new HashSet<IoSession>();
 	private boolean bStart = false;
@@ -76,12 +76,12 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 		if (bStart) {
 			stop();
 			bStart = false;
-			jButtonStart.setText("¿ªÆô¼àÌı");
+			jButtonStart.setText("å¼€å¯ç›‘å¬");
 		} else {
 			// Bind
 			String port = this.jTextFieldPort.getText();
 			if (port == null || port.equals("")) {
-				JOptionPane.showMessageDialog(this, "ÇëÊäÈë¶Ë¿ÚºÅ", "Á¬½Ó´íÎó",
+				JOptionPane.showMessageDialog(this, "è¯·è¾“å…¥ç«¯å£å·", "è¿æ¥é”™è¯¯",
 						JOptionPane.ERROR_MESSAGE);
 				jTextFieldPort.requestFocus();
 				jTextFieldPort.selectAll();
@@ -91,7 +91,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 			try {
 				portNo = Integer.parseInt(port);
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(this, "¶Ë¿ÚºÅ´íÎó,ÇëÖØĞÂÊäÈë", "Á¬½Ó´íÎó",
+				JOptionPane.showMessageDialog(this, "ç«¯å£å·é”™è¯¯,è¯·é‡æ–°è¾“å…¥", "è¿æ¥é”™è¯¯",
 						JOptionPane.ERROR_MESSAGE);
 				jTextFieldPort.requestFocus();
 				jTextFieldPort.selectAll();
@@ -105,7 +105,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 	{
 		if (sessions.size()==0)
 			return;
-		append("·¢ËÍ"+data.limit()+"¸ö×Ö·û,ÄÚÈİÈçÏÂ:");
+		append("å‘é€"+data.limit()+"ä¸ªå­—ç¬¦,å†…å®¹å¦‚ä¸‹:");
 		append(data.getHexDump());
 		synchronized (sessions)
 		{
@@ -115,7 +115,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 			}
 		}
 	}
-	
+
 	public void send() {
 		String message=jTextFieldSend.getText();
 		if (message==null || message.length()<1)
@@ -124,11 +124,11 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 		ByteBuffer buf=ByteBuffer.allocate(1024);
 		buf.setAutoExpand(true);
 		buf.put(message.getBytes());
-		buf.flip();		
+		buf.flip();
 		send(buf);
 		jTextFieldSend.setText("");
-	}	
-	
+	}
+
 
 	public void sendFile() {
 		JFileChooser chooser = new JFileChooser();
@@ -140,7 +140,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
             long length=f.length();
             if (length>1024)
             {
-            	JOptionPane.showMessageDialog(this, "²»ÄÜ·¢ËÍ´óÓÚ1024×Ö½ÚµÄÎÄ¼ş", "·¢ËÍ´íÎó",
+            	JOptionPane.showMessageDialog(this, "ä¸èƒ½å‘é€å¤§äº1024å­—èŠ‚çš„æ–‡ä»¶", "å‘é€é”™è¯¯",
     					JOptionPane.ERROR_MESSAGE);
             	return;
             }
@@ -154,33 +154,33 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
             	ByteBuffer buf = ByteBuffer.allocate(size);
             	buf.put(data);
             	buf.flip();
-            	
+
             	send(buf);
             }
             catch (Exception e)
             {
-            	
+
             }
         }
 	}
 
 	private void start(int port) {
 		try {
-		
+
 		  SocketAcceptorConfig cfg = new SocketAcceptorConfig();
 	        cfg.setReuseAddress( false );
 	        acceptor.bind(
 			        new InetSocketAddress( port ),
 			        this, cfg );
-		
-		
-			
+
+
+
 			bStart = true;
-			jButtonStart.setText("¹Ø±Õ¼àÌı");
+			jButtonStart.setText("å…³é—­ç›‘å¬");
 			jTextArea.setText("> Server Started on Port: " + port + NEW_LINE);
 			append("> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "²»ÄÜ¿ªÆô¼àÌı," + e, "Á¬½Ó´íÎó",
+			JOptionPane.showMessageDialog(this, "ä¸èƒ½å¼€å¯ç›‘å¬," + e, "è¿æ¥é”™è¯¯",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -204,22 +204,22 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 * @return void
 	 */
 	private void initialize() {
 		jLabel3 = new JLabel();
 		jLabel3.setBounds(new java.awt.Rectangle(20, 78, 59, 26));
-		jLabel3.setText("ÏûÏ¢");
+		jLabel3.setText("æ¶ˆæ¯");
 		jLabel2 = new JLabel();
 		jLabel2.setBounds(new java.awt.Rectangle(18, 388, 38, 26));
-		jLabel2.setText("ÏûÏ¢");
+		jLabel2.setText("æ¶ˆæ¯");
 		jLabel1 = new JLabel();
 		jLabel1.setBounds(new java.awt.Rectangle(18, 354, 54, 26));
-		jLabel1.setText("¹ã²¥·¢ËÍ");
+		jLabel1.setText("å¹¿æ’­å‘é€");
 		jLabel = new JLabel();
 		jLabel.setBounds(new java.awt.Rectangle(20, 29, 43, 26));
-		jLabel.setText("¶Ë¿ÚºÅ");
+		jLabel.setText("ç«¯å£å·");
 		this.setLayout(null);
 		this.setSize(581, 421);
 		this.add(jLabel, null);
@@ -236,7 +236,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	/**
 	 * This method initializes jTextFieldPort
-	 * 
+	 *
 	 * @return javax.swing.JTextField
 	 */
 	private JTextField getJTextFieldPort() {
@@ -249,14 +249,14 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	/**
 	 * This method initializes jButtonStart
-	 * 
+	 *
 	 * @return javax.swing.JButton
 	 */
 	private JButton getJButtonStart() {
 		if (jButtonStart == null) {
 			jButtonStart = new JButton();
 			jButtonStart.setBounds(new java.awt.Rectangle(230, 30, 156, 35));
-			jButtonStart.setText("¿ªÆô¼àÌı");
+			jButtonStart.setText("å¼€å¯ç›‘å¬");
 			jButtonStart.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					startOrStopServer();
@@ -268,7 +268,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	/**
 	 * This method initializes jTextArea
-	 * 
+	 *
 	 * @return javax.swing.JTextArea
 	 */
 	private JTextArea getJTextArea() {
@@ -282,7 +282,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	/**
 	 * This method initializes jTextFieldSend
-	 * 
+	 *
 	 * @return javax.swing.JTextField
 	 */
 	private JTextField getJTextFieldSend() {
@@ -296,14 +296,14 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	/**
 	 * This method initializes jButtonSend
-	 * 
+	 *
 	 * @return javax.swing.JButton
 	 */
 	private JButton getJButtonSend() {
 		if (jButtonSend == null) {
 			jButtonSend = new JButton();
 			jButtonSend.setBounds(new java.awt.Rectangle(282, 385, 74, 28));
-			jButtonSend.setText("·¢ËÍ");
+			jButtonSend.setText("å‘é€");
 			jButtonSend.addActionListener(sendListener);
 		}
 		return jButtonSend;
@@ -311,14 +311,14 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	/**
 	 * This method initializes jButtonSendFile
-	 * 
+	 *
 	 * @return javax.swing.JButton
 	 */
 	private JButton getJButtonSendFile() {
 		if (jButtonSendFile == null) {
 			jButtonSendFile = new JButton();
 			jButtonSendFile.setBounds(new java.awt.Rectangle(360, 385, 94, 28));
-			jButtonSendFile.setText("·¢ËÍÎÄ¼ş");
+			jButtonSendFile.setText("å‘é€æ–‡ä»¶");
 			jButtonSendFile
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -331,7 +331,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	/**
 	 * This method initializes jPanel
-	 * 
+	 *
 	 * @return javax.swing.JPanel
 	 */
 	private JPanel getJPanel() {
@@ -348,7 +348,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	/**
 	 * This method initializes jScrollPane
-	 * 
+	 *
 	 * @return javax.swing.JScrollPane
 	 */
 	private JScrollPane getJScrollPane() {
@@ -367,10 +367,10 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 			text = text.substring(1024*20);
 			jTextArea.setText(text);
 		}
-		
+
 		jTextArea.setCaretPosition(jTextArea.getText().length());
-		
-		
+
+
 	}
 
 	public void sessionCreated(IoSession arg0) throws Exception {
@@ -379,7 +379,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 	}
 
 	public void sessionOpened(IoSession session) throws Exception {
-		append("´ò¿ªÒ»¸öÁ¬½Ó,µØÖ·:" + session.getRemoteAddress());
+		append("æ‰“å¼€ä¸€ä¸ªè¿æ¥,åœ°å€:" + session.getRemoteAddress());
 		synchronized (sessions)
 		{
 			sessions.add(session);
@@ -387,7 +387,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 	}
 
 	public void sessionClosed(IoSession session) throws Exception {
-		append("¹Ø±ÕÒ»¸öÁ¬½Ó,µØÖ·:" + session.getRemoteAddress());
+		append("å…³é—­ä¸€ä¸ªè¿æ¥,åœ°å€:" + session.getRemoteAddress());
 		synchronized (sessions)
 		{
 			sessions.remove(session);
@@ -405,11 +405,11 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	}
 
-	
+
 
 	public void messageReceived(IoSession arg0, Object obj) throws Exception {
 		ByteBuffer buf=(ByteBuffer )obj;
-		append("ÊÕµ½Êı¾İ£¬³¤¶È£º" + buf.limit() + "£¬ÄÚÈİ£º");
+		append("æ”¶åˆ°æ•°æ®ï¼Œé•¿åº¦ï¼š" + buf.limit() + "ï¼Œå†…å®¹ï¼š");
 		append("" + buf.getHexDump());
 		append("");
 		int len=buf.limit();
@@ -420,7 +420,7 @@ public class NetServerTestPanel extends JPanel implements IoHandler {
 
 	public void messageSent(IoSession arg0, Object arg1) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 } // @jve:decl-index=0:visual-constraint="10,10"
