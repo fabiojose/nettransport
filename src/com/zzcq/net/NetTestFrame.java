@@ -12,10 +12,10 @@ public class NetTestFrame extends JFrame{
 	private JTabbedPane jTabbedPane = null;
 	private NetServerTestPanel serverPanel ;  //  @jve:decl-index=0:visual-constraint="10,472"
 	private NetClientTestPanel clientPanel ;  //  @jve:decl-index=0:visual-constraint="10,472"
-	
+
 	/**
-	 * This method initializes 
-	 * 
+	 * This method initializes
+	 *
 	 */
 	public NetTestFrame() {
 		super();
@@ -24,28 +24,28 @@ public class NetTestFrame extends JFrame{
 
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 */
 	private void initialize() {
         this.setSize(new java.awt.Dimension(600,480));
-        this.setTitle("ÍøÂç²âÊÔ--0.2.2	20070919");
+        this.setTitle("ç½‘ç»œæµ‹è¯•--0.3.2	20100315");
         this.setContentPane(getJTabbedPane());
         serverPanel = new NetServerTestPanel();
         serverPanel.setSize(new java.awt.Dimension(465,437));
         clientPanel = new NetClientTestPanel();
         clientPanel.setSize(new java.awt.Dimension(465,437));
-        
-        jTabbedPane.add("¿Í»§¶Ë",clientPanel);
-        jTabbedPane.add("·şÎñ¼àÌı",serverPanel);	
-        
-        
+
+        jTabbedPane.add("å®¢æˆ·ç«¯",clientPanel);
+        jTabbedPane.add("æœåŠ¡ç›‘å¬",serverPanel);
+
+
         WindowTool.centerWindow(this);
 	}
 
 	/**
-	 * This method initializes jTabbedPane	
-	 * 	
-	 * @return javax.swing.JTabbedPane	
+	 * This method initializes jTabbedPane
+	 *
+	 * @return javax.swing.JTabbedPane
 	 */
 	private JTabbedPane getJTabbedPane() {
 		if (jTabbedPane == null) {
@@ -53,7 +53,7 @@ public class NetTestFrame extends JFrame{
 		}
 		return jTabbedPane;
 	}
-	
+
 	public static void main(String[] args)
 	{
 		PropertyConfigurator.configure("log.properties");
@@ -61,5 +61,5 @@ public class NetTestFrame extends JFrame{
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 	}
-	
+
 }  //  @jve:decl-index=0:visual-constraint="10,10"
