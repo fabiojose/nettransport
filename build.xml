@@ -30,7 +30,7 @@
 
 	<target name="compile" >
 		<mkdir dir="${build.dir}/classes"/>
-		<javac srcdir="${src.dir}" destdir="${build.dir}/classes" classpathref="build.classpath" source="1.5" target="1.5">
+		<javac srcdir="${src.dir}" destdir="${build.dir}/classes" classpathref="build.classpath" encoding="utf-8" source="1.5" target="1.5">
 			<include name="**/*.java"/>
 		</javac>
 	</target>
