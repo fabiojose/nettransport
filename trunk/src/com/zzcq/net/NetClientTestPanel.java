@@ -531,8 +531,8 @@ public class NetClientTestPanel extends JPanel implements IoHandler {
 		buffer_read.position(0);
 		byte[] data = new byte[buffer_read.limit()];
 		buffer_read.get(data);
-		String ret = new String(data);
-		jTextArea.setBuffer(ret.getBytes());
+		jTextArea.setBuffer(data);
+                
 		// jTextArea.setCaretPosition(jTextArea.getText().length());
 
 	}

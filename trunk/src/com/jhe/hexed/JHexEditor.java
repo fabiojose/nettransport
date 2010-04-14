@@ -37,6 +37,7 @@ import javax.swing.JTextArea;
 public class JHexEditor extends JPanel implements FocusListener,AdjustmentListener,MouseWheelListener
 {
     byte[] buffer;
+    String encoding="UTF-8";
     public int cursor;
     protected static Font font=new Font("Monospaced",0,12);
     protected int border=2;
@@ -446,8 +447,14 @@ public class JHexEditor extends JPanel implements FocusListener,AdjustmentListen
 	public void setBuffer(byte[] buffer) {
 		this.buffer = buffer;
 		//if (bHex)
-                    sb.setMaximum((buffer.length+15)/16);               
-                    textArea.setText(new String(buffer));
+                    sb.setMaximum((buffer.length+15)/16);
+                    try{
+                        textArea.setText(new String(buffer,encoding));
+                    }
+                    catch(Exception e)
+                    {
+                        textArea.setText(encoding+"编码不支持");
+                    }
 	}
 
 	public boolean isEditable() {
